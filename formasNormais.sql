@@ -121,15 +121,16 @@ CREATE TABLE ENDERECO(
     ESTADO CHAR(2) NOT NULL,
     ID_CLIENTE INTEGER UNIQUE,
     FOREIGN KEY(ID_CLIENTE) 
-    REFERENCES CLIENTE(ID_CLIENTE)
+    REFERENCES CLIENTE(IDCLIENTE)
 );
+
 CREATE TABLE TELEFONE(  
     IDTELEFONE INTEGER PRIMARY KEY AUTO_INCREMENT,
     TIPO ENUM('RES','COM','CEL') NOT NULL,
-    NUMERO VARCHAR(15) NOT NULL
+    NUMERO VARCHAR(15) NOT NULL,
     ID_CLIENTE INTEGER,
     FOREIGN KEY(ID_CLIENTE)
-    REFERENCES CLIENTE(ID_CLIENTE)
+    REFERENCES CLIENTE(IDCLIENTE)
 );
 
 /*
@@ -144,4 +145,73 @@ CADASTRO DE MAIS DE UM (OPCIONAL)*/
     EM RELACIONAMENTOS 1 X N A CHAVE ESTRANGEIRA FICA SEMPRE NA CARDINALIDADE N
 */
 
+INSERT INTO CLIENTE(NOME,SEXO,EMAIL,CPF) 
+    VALUES ('Gabriel Carvalho','M','gabrielfeocarvalho57@gmail.com','10468795960');
+INSERT INTO CLIENTE(NOME,SEXO,EMAIL,CPF)
+    VALUES('JOÃO','M','joao@hotmail.com','96954235126');
+INSERT INTO CLIENTE(NOME,SEXO,EMAIL,CPF)
+    VALUES('CARLOS','M','carlos@hotmail.com','32345635126');
+INSERT INTO CLIENTE(NOME,SEXO,EMAIL,CPF)
+    VALUES('ANA','F','ana@hotmail.com','65312436875');
+INSERT INTO CLIENTE(NOME,SEXO,EMAIL,CPF)
+    VALUES('CLARA','F',NULL,'32152536245');
+INSERT INTO CLIENTE(NOME,SEXO,EMAIL,CPF)
+    VALUES('JORGE','M','jorge@gmail.com','95361423524');
+INSERT INTO CLIENTE(NOME,SEXO,EMAIL,CPF)
+    VALUES('CELIA','F','celia@hotmail.com','12436215111');
 
++-----------+------------------+------+--------------------------------+-------------+
+| IDCLIENTE | NOME             | SEXO | EMAIL                          | CPF         |
++-----------+------------------+------+--------------------------------+-------------+
+|         1 | Gabriel Carvalho | M    | gabrielfeocarvalho57@gmail.com | 10468795960 |
+|         2 | JOÃO             | M    | joao@hotmail.com               | 96954235126 |
+|         3 | CARLOS           | M    | carlos@hotmail.com             | 32345635126 |
+|         4 | ANA              | F    | ana@hotmail.com                | 65312436875 |
+|         5 | CLARA            | F    | NULL                           | 32152536245 |
+|         6 | JORGE            | M    | jorge@gmail.com                | 95361423524 |
+|         7 | CELIA            | F    | celia@hotmail.com              | 12436215111 |
++-----------+------------------+------+--------------------------------+-------------+
+
+INSERT INTO ENDERECO(RUA, BAIRRO,CIDADE,ESTADO, ID_CLIENTE)
+    VALUES('RUA ANTONIO DE SÁ','CENTRO','BELO HORIZONTE','MG',5);
+INSERT INTO ENDERECO(RUA, BAIRRO,CIDADE,ESTADO, ID_CLIENTE)
+    VALUES('RUA JÕAO ANTONIO DE LARA','CENTRO','ALMIRANTE TAMANDARÉ','PR',4);
+INSERT INTO ENDERECO(RUA, BAIRRO,CIDADE,ESTADO, ID_CLIENTE)
+    VALUES('RUA CAPITAO HERMES','CENTRO','RIO DE JANEIRO','RJ',3);
+INSERT INTO ENDERECO(RUA, BAIRRO,CIDADE,ESTADO, ID_CLIENTE)
+    VALUES('RUA PRESIDENTE VARGAS','JARDINS','SÃO PAULO','SP',2);
+INSERT INTO ENDERECO(RUA, BAIRRO,CIDADE,ESTADO, ID_CLIENTE)
+    VALUES('RUA ALFANDEGA','LAPA','RIO DE JANEIRO','RJ',1);
+INSERT INTO ENDERECO(RUA, BAIRRO,CIDADE,ESTADO, ID_CLIENTE)
+    VALUES('RUA DO OUVIDOR','ESTACIO','RIO DE JANEIRO','RJ',6);
+INSERT INTO ENDERECO(RUA, BAIRRO,CIDADE,ESTADO, ID_CLIENTE)
+    VALUES('RUA ANITA GARIBALDE','AHÚ','CURITIBA','PR',7);
+
+-- TENTE INSERIR MAIS DE UM ENDEREÇO PARA UM CLIENTE
+INSERT INTO ENDERECO(RUA, BAIRRO,CIDADE,ESTADO, ID_CLIENTE)
+    VALUES('RUA ANITA GARIBALDE','BARREIRINHA','CURITIBA','PR',7);
+-- ERROR 1062 (23000): Duplicate entry '7' for key 'ENDERECO.ID_CLIENTE'
+-- clausula UNIQUE impede a entrada de mais de um endereço por cliente
++------------+---------------------------+---------+----------------------+--------+------------+
+| IDENDERECO | RUA                       | BAIRRO  | CIDADE               | ESTADO | ID_CLIENTE |
++------------+---------------------------+---------+----------------------+--------+------------+
+|          1 | RUA ANTONIO DE SÁ         | CENTRO  | BELO HORIZONTE       | MG     |          5 |
+|          2 | RUA JÕAO ANTONIO DE LARA  | CENTRO  | ALMIRANTE TAMANDARÉ  | PR     |          4 |
+|          3 | RUA CAPITAO HERMES        | CENTRO  | RIO DE JANEIRO       | RJ     |          3 |
+|          4 | RUA PRESIDENTE VARGAS     | JARDINS | SÃO PAULO            | SP     |          2 |
+|          5 | RUA ALFANDEGA             | LAPA    | RIO DE JANEIRO       | RJ     |          1 |
+|          6 | RUA DO OUVIDOR            | ESTACIO | RIO DE JANEIRO       | RJ     |          6 |
+|          7 | RUA ANITA GARIBALDE       | AHÚ     | CURITIBA             | PR     |          7 |
++------------+---------------------------+---------+----------------------+--------+------------+
+
+DESC TELEFONE;
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','996948069',1);
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'RES','35851532',1);
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','94986564',5);
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','95643515',4);
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'RES','36987845',4);
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'RES','36352450',3);
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'COM','90013001',3);
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','84156739',2);
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','84545625',6);
+INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','86845132',6);
