@@ -205,6 +205,7 @@ INSERT INTO ENDERECO(RUA, BAIRRO,CIDADE,ESTADO, ID_CLIENTE)
 +------------+---------------------------+---------+----------------------+--------+------------+
 
 DESC TELEFONE;
+
 INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','996948069',1);
 INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'RES','35851532',1);
 INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','94986564',5);
@@ -215,3 +216,85 @@ INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'COM','9001
 INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','84156739',2);
 INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','84545625',6);
 INSERT INTO TELEFONE(IDTELEFONE, TIPO,NUMERO,ID_CLIENTE) VALUES(NULL,'CEL','86845132',6);
+
+
+/* SELECAO, PROJECAO E JUNCAO*/
+/*PROJECAO -> É TUDO QUE VOCE QUER VER NA TELA*/
+
+SELECT NOW() AS  DATA_ATUAL;
+
+SELECT 2 + 2 AS SOMA;
+
+SELECT 2 + 2 AS SOMA, NOME, NOW()
+FROM CLIENTE;
+
+/*SELECAO  -> É UM SUBCONJUNTO DO CONJUNTO TOTAL DE 
+REGISTRO DE UMA TABELA
+- A CLAUSULA DE SELECAO É O WHERE
+*/
+
+SELECT NOME,SEXO, EMAIL /*PROJECAO*/
+FROM CLIENTE    /*ORIGEM*/
+WHERE SEXO = 'F'; /* SELECAO */
+
+SELECT NUMERO
+FROM TELEFONE
+WHERE TIPO = 'CEL';
+
+/*JUNCAO -> */
+
++------------------+--------------------------------+-----------++------------+---------+
+| NOME             | EMAIL                          | IDCLIENTE || ID_CLIENTE | BAIRRO  |
++------------------+--------------------------------+-----------++------------+---------+
+| Gabriel Carvalho | gabrielfeocarvalho@gmail.com   |         1 ||          5 | CENTRO  |
+| JOÃO             | joao@hotmail.com               |         2 ||          4 | CENTRO  |
+| CARLOS           | carlos@hotmail.com             |         3 ||          3 | CENTRO  |
+| ANA              | ana@hotmail.com                |         4 ||          2 | JARDINS |
+| CLARA            | NULL                           |         5 ||          1 | LAPA    |
+| JORGE            | jorge@gmail.com                |         6 ||          6 | ESTACIO |
+| CELIA            | celia@hotmail.com              |         7 ||          7 | AHÚ     |
++------------------+--------------------------------+-----------++------------+---------+
+
+
+/*NOME, SEXO, BAIRRO, CIDADE*/
+
+SELECT NOME,SEXO, BAIRRO, CIDADE
+FROM CLIENTE 
+INNER JOIN ENDERECO 
+ON IDCLIENTE = ID_CLIENTE;
+
+SELECT NOME,SEXO, BAIRRO, CIDADE /*PROJECAO*/
+FROM CLIENTE /*ORIGEM*/
+    INNER JOIN ENDERECO  /*JUNCAO*/
+    ON IDCLIENTE = ID_CLIENTE
+WHERE SEXO = 'F';/*SELECAO*/
+
+/*NOME, SEXO, BAIRRO, CIDADE, TIPO, NUMERO*/
+-- PONTEIRAMENTO AJUDA NA PERFORMANCE DO BANCO
+SELECT 
+    C.NOME,
+    C.SEXO,
+    E.BAIRRO,
+    E.CIDADE,
+    T.TIPO,
+    T.NUMERO
+FROM CLIENTE C
+     INNER JOIN ENDERECO E
+     ON C.IDCLIENTE = E.ID_CLIENTE
+     INNER JOIN TELEFONE T
+     ON C.IDCLIENTE = T.ID_CLIENTE;
+
+SELECT 
+    CLIENTE.NOME,
+    CLIENTE.SEXO,
+    ENDERECO.BAIRRO,
+    ENDERECO.CIDADE,
+    TELEFONE.TIPO,
+    TELEFONE.NUMERO
+FROM CLIENTE 
+     INNER JOIN ENDERECO 
+     ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+     INNER JOIN TELEFONE 
+     ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE;
+
+
