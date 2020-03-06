@@ -1,0 +1,164 @@
+-- Utilize  o banco do exercicoDML.sql
+USE exercicioDML;
+DESC CLIENTE;
+DESC ENDERECO;
+DESC TELEFONE;
+
+/*nome,email,estado,numero*/
+
+SELECT C.NOME,C.EMAIL,E.ESTADO,T.NUMERO
+    FROM CLIENTE C
+    INNER JOIN ENDERECO E
+    ON C.IDCLIENTE = E.ID_CLIENTE
+    INNER JOIN TELEFONE T
+    ON C.IDCLIENTE = T.ID_CLIENTE;
+
++---------+-------------------+--------+----------+
+| NOME    | EMAIL             | ESTADO | NUMERO   |
++---------+-------------------+--------+----------+
+| JOAO    | JOAOA@IG.COM      | MG     | 68976565 |
+| JOAO    | JOAOA@IG.COM      | MG     | 99656675 |
+| CARLOS  | CARLOSA@IG.COM    | RJ     | 33567765 |
+| CARLOS  | CARLOSA@IG.COM    | RJ     | 88668786 |
+| CARLOS  | CARLOSA@IG.COM    | RJ     | 55689654 |
+| ANA     | ANA@IG.COM        | RJ     | 88687979 |
+| CLARA   | NULL              | RJ     | 88965676 |
+| JORGE   | JORGE@IG.COM      | ES     | 89966809 |
+| CELIA   | JCELIA@IG.COM     | RJ     | 88679978 |
+| FLAVIO  | FLAVIO@IG.COM     | PR     | 99655768 |
+| ANDRE   | ANDRE@GLOBO.COM   | SP     | 89955665 |
+| GIOVANA | NULL              | PR     | 77455786 |
+| GIOVANA | NULL              | PR     | 89766554 |
+| KARLA   | KARLA@GMAIL.COM   | SP     | 77755785 |
+| KARLA   | KARLA@GMAIL.COM   | SP     | 44522578 |
+| DANIELE | DANIELE@GMAIL.COM | RJ     | 78458743 |
+| DANIELE | DANIELE@GMAIL.COM | RJ     | 56576876 |
+| LORENA  | NULL              | RJ     | 87866896 |
+| EDUARDO | NULL              | RJ     | 54768899 |
+| ANTONIO | ANTONIO@UOL.COM   | RJ     | 99667587 |
+| ANTONIO | ANTONIO@UOL.COM   | RJ     | 78989765 |
+| ELAINE  | ELAINE@GLOBO.COM  | SP     | 99766676 |
+| CARMEM  | CARMEM@IG.COM     | RJ     | 66687899 |
+| ADRIANA | ADRIANA@GMAIL.COM | RJ     | 89986668 |
+| ADRIANA | ADRIANA@GMAIL.COM | RJ     | 88687909 |
++---------+-------------------+--------+----------+
+-- IFNULL(COLUMN,WHATTODO);
+
+SELECT  C.NOME,
+        IFNULL(C.EMAIL,'NÃO TEM EMAIL')
+        E.ESTADO,
+        T.NUMERO
+FROM CLIENTE C
+    INNER JOIN ENDERECO E
+    ON C.IDCLIENTE = E.ID_CLIENTE
+    INNER JOIN TELEFONE T
+    ON C.IDCLIENTE = T.ID_CLIENTE;
+
+SELECT  C.NOME,
+        IFNULL(C.EMAIL,'NÃO TEM EMAIL') AS EMAIL,
+        E.ESTADO,
+        T.NUMERO
+FROM CLIENTE C
+    INNER JOIN ENDERECO E
+    ON C.IDCLIENTE = E.ID_CLIENTE
+    INNER JOIN TELEFONE T
+    ON C.IDCLIENTE = T.ID_CLIENTE;
+
+/* VIEWS 
+    FUNCIONA COMO UM PONTEIRO PARA A QUERY
+*/
+
+CREATE VIEW RELATORIO AS
+SELECT  C.NOME,
+        C.SEXO,
+        IFNULL(C.EMAIL,'*****') AS EMAIL,
+        T.TIPO,
+        T.NUMERO,
+        E.BAIRRO,
+        E.CIDADE,
+        E.ESTADO
+FROM CLIENTE C
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE;
+
+-- APAGANDO UMA VIES;
+DROP VIEW RELATORIO;
+
+/*INSERINDO UM PREFIXO*/
+
+CREATE VIEW V_RELATORIO AS
+SELECT  C.NOME,
+        C.SEXO,
+        IFNULL(C.EMAIL,'*****') AS 'E-MAIL',
+        T.TIPO,
+        T.NUMERO,
+        E.BAIRRO,
+        E.CIDADE,
+        E.ESTADO
+FROM CLIENTE C
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE;
+
+SELECT NOME,NUMERO,ESTADO
+FROM V_RELATORIO;
+
+/*UPDATE, INSERT E DELETE - DML*/
+INSERT INTO V_RELATORIO VALUES ('CARLOS',
+'M','CARLOS@IG.COM.BR','CEL','65484858','BOA VISTA','CURITIBA','PR');
+
+/*ERROR 1394 (HY000): Can not insert into join view 'exercicioDML.V_RELATORIO' without fields list*/
+
+/*NÃO É POSSIVEL INSERIR NEM DELETAR EM VIEWS COM JOIN*/
+
+CREATE TABLE PECAS (
+    IDPECA INT PRIMARY KEY AUTO_INCREMENT,
+    NOME  VARCHAR(20),
+    PRECO FLOAT(10,2),
+    QUANTIDADE INT
+);
+
+INSERT INTO PECAS VALUES(1,'PARAFUSO',0.2,400);
+INSERT INTO PECAS VALUES(2,'CHAVE DE FENDA',1.5,100);
+INSERT INTO PECAS VALUES(3,'CHAVE PHILIPS',2.5,20);
+INSERT INTO PECAS VALUES(4,'ALICATE',5.80,30);
+
+CREATE VIEW V_PECAS AS
+SELECT NOME,PRECO,QUANTIDADE
+FROM PECAS;
+
+
+SELECT * FROM V_PECAS;
+
+DELETE FROM V_PECAS
+WHERE NOME = 'PARAFUSO';
++----------------+-------+------------+
+| NOME           | PRECO | QUANTIDADE |
++----------------+-------+------------+
+| CHAVE DE FENDA |  1.50 |        100 |
+| CHAVE PHILIPS  |  2.50 |         20 |
+| ALICATE        |  5.80 |         30 |
++----------------+-------+------------+
+
+INSERT INTO V_PECAS VALUES('CHAVE 8',1,15) ;
+
++----------------+-------+------------+
+| NOME           | PRECO | QUANTIDADE |
++----------------+-------+------------+
+| CHAVE DE FENDA |  1.50 |        100 |
+| CHAVE PHILIPS  |  2.50 |         20 |
+| ALICATE        |  5.80 |         30 |
+| CHAVE 8        |  1.00 |         15 |
++----------------+-------+------------+
+
+/*É POSSÍVEL INSERIR EM VIES SEM JOIN SO ATENTE A COLUNAS, PORQUE ELE SO INSERI AS COLUNAS QUE VOCE PUXOU NA VIEW*/
+CREATE VIEW V_PECAS2 AS
+SELECT NOME,PRECO
+FROM PECAS;
+
+ INSERT INTO V_PECAS2 VALUES('CHAVE DE MAO',1.30,10);
+/*ERROR 1136 (21S01): Column count doesn't match value count at row 1*/;
+
