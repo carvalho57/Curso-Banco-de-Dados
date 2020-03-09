@@ -8,6 +8,6 @@
 - [X] Comandos de DDL
 - [X] Comandos de DML
 - [X] Primeira Forma Normal
-- [] JOIN
+- [x] JOIN
 - [] Views
 - [] Procedures
