@@ -10,4 +10,4 @@
 - [X] Primeira Forma Normal
 - [x] JOIN
 - [X] Procedures
-- [] Views
+- [ ] Views
