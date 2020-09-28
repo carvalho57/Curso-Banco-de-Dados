@@ -9,5 +9,5 @@
 - [X] Comandos de DML
 - [X] Primeira Forma Normal
 - [x] JOIN
-- [] Views
-- [] Procedures
+- [X] Procedures
+- [ ] Views
