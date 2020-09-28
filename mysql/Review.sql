@@ -121,3 +121,13 @@ ON GP.Grupo_ID = ET.Grupo_ID
 INNER JOIN Aluno A
 ON GP.Aluno_ID = A.AlunoID
 WHERE ET.Grupo_ID = 1; /*Seleção*/
+
+SELECT *
+FROM EntregaTrabalho ET 
+INNER JOIN Trabalho T
+ON ET.Trabalho_ID = T.TrabalhoID
+INNER JOIN GrupoAluno GP 
+ON GP.Grupo_ID = ET.Grupo_ID
+INNER JOIN Aluno A
+ON GP.Aluno_ID = A.AlunoID
+WHERE ET.Grupo_ID = 1; 

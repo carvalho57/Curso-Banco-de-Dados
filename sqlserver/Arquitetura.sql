@@ -34,7 +34,7 @@ IF NOT EXISTS (
    SELECT name
    FROM sys.databases
    WHERE name = N'EMPRESA'
-)
+) 
 CREATE DATABASE EMPRESA;
 GO
 USE EMPRESA;

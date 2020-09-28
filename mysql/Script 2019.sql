@@ -92,7 +92,7 @@ char(10)
 entrando a palavra joao
 
 total de bytes varchar(10) = 4 bytes
-toal de bytes cahr(10) = 10 bytes
+toal de bytes char(10) = 10 bytes
 
 isso ocorre pois o char não varia. Os caracteres restantes serao preenchidos com espaço. 
 eles nao ficam vazios. Enquanto que no varchar, o tipo varia conforme o dado.
@@ -133,7 +133,7 @@ INSERT INTO CLIENTE(NOME,SEXO,ENDERECO,TELEFONE,CPF) VALUES('LILIAN','F','SENADO
 INSERT INTO CLIENTE VALUES('ANA','F','ANA@GLOBO.COM',85548962,'548556985','PRES ANTONIO CARLOS - CENTRO - SAO PAULO - SP'),
                           ('CARLA','F','CARLA@TERATI.COM.BR',7745828,'66587458','SAMUEL SILVA - CENTRO - BELO HORIZONTE - MG');
 						  
-INSERT INTO CLIENTE(NOME,SEXO,ENDERECO,TELEFONE,CPF) VALUES('CLARA','F','SENADOR SOARES - TIJUCA - RIO DE JANEIRO - RJ','883665843',99999999999);
+INSERT INTO CLIENTE(NOME,SEXO,ENDERECO,TELEFONE,CPF) VALUES('CLARA','F','SENADOR SOARES - TIJUCA - RIO DE JANEIRO - RJ','883665843',4294967295);
 
 INSERT INTO CLIENTE(NOME,SEXO,ENDERECO,TELEFONE,CPF) VALUES('CLARA','F','SENADOR SOARES - TIJUCA - RIO DE JANEIRO - RJ','883665843',22222222222);
 						  

@@ -92,7 +92,7 @@ char(10)
 entrando a palavra joao
 
 total de bytes varchar(10) = 4 bytes
-toal de bytes cahr(10) = 10 bytes
+toal de bytes char(10) = 10 bytes
 
 isso ocorre pois o char não varia. Os caracteres restantes serao preenchidos com espaço. 
 eles nao ficam vazios. Enquanto que no varchar, o tipo varia conforme o dado.
@@ -1556,7 +1556,7 @@ OR EMAIL = 'LILIAN@HOTMAIL.COM';
 
 SELECT * FROM CLIENTE -- OR TRAZ TODO MUNDO COM PELO MENOS UMA DAS DUAS CONDICOES
 WHERE NOME = 'CARLA'
-AND EMAIL = 'LILIAN@HOTMAIL.COM';
+OR EMAIL = 'LILIAN@HOTMAIL.COM';
 
 DELETE FROM CLIENTE -- TRAZ APENAS O REGISTRO QUE SATISFACA AS DUAS CONDICOES
 WHERE NOME = 'CARLA'
